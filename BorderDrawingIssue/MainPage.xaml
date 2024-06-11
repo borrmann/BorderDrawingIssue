@@ -1,0 +1,112 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="BorderDrawingIssue.MainPage"
+             xmlns:custom="clr-namespace:BorderDrawingIssue.ViewModels"
+             x:DataType="custom:PageViewModel">
+
+    <Grid RowDefinitions="Auto,*">
+        <HorizontalStackLayout Spacing="10">
+
+            <Border StrokeShape="RoundRectangle 20"
+                    Margin="10,0,0,0">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding FilterCommand}"
+                                          CommandParameter="{StaticResource True}" />
+                </Border.GestureRecognizers>
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border"
+                                 Binding="{Binding FilterActive}"
+                                 Value="True">
+                        <Setter Property="Background"
+                                Value="Red" />
+                    </DataTrigger>
+                </Border.Triggers>
+
+                <Label Text="All"
+                       Margin="4,0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontAutoScalingEnabled="false"
+                       Grid.Column="1" />
+            </Border>
+
+            <Border StrokeShape="RoundRectangle 20">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding FilterCommand}"
+                                          CommandParameter="{StaticResource False}" />
+                </Border.GestureRecognizers>
+                <Border.Triggers>
+                    <DataTrigger TargetType="Border"
+                                 Binding="{Binding FilterActive}"
+                                 Value="False">
+                        <Setter Property="Background"
+                                Value="Gray" />
+                    </DataTrigger>
+                </Border.Triggers>
+                <Label Text="Filter"
+                       Margin="4,0"
+                       VerticalOptions="Center"
+                       HorizontalOptions="Center"
+                       FontAttributes="Bold"
+                       FontAutoScalingEnabled="false"
+                       Grid.Column="1" />
+            </Border>
+        </HorizontalStackLayout>
+
+        <CollectionView Grid.Row="1" ItemsSource="{Binding Items}" >
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="custom:Item">
+                    <Border>
+                        <Label Text="{Binding Title}" />
+                    </Border>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.EmptyView>
+                <Grid>
+                    <VerticalStackLayout Margin="15"
+                                         VerticalOptions="Center"
+                                         HorizontalOptions="Fill">
+
+                        <Border VerticalOptions="Center"
+                                Stroke="Blue"
+                                StrokeThickness="1">
+                            <Border.Background>
+                                <LinearGradientBrush StartPoint="0,0"
+                                                     EndPoint="1,1">
+                                    <GradientStop Color="Red"
+                                                  Offset="0.2" />
+                                    <GradientStop Color="Green"
+                                                  Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+
+                            <Grid RowDefinitions="Auto,Auto">
+
+                                <Grid ColumnDefinitions="40,*"
+                                      HorizontalOptions="FillAndExpand">
+                                    <Label VerticalOptions="CenterAndExpand"
+                                           LineBreakMode="WordWrap"
+                                           FontAttributes="Bold"
+                                           Margin="2"
+                                           Grid.Column="1"
+                                           Text="iegienf ewgniweng wegweug weg weubf uwebgi ewbghwebg iewbgiwebgiweb gewubg ewuibg uiew" />
+                                </Grid>
+                                <ContentView ZIndex="2"
+                                             Grid.Row="1"
+                                             x:Name="BodyContentView" />
+                            </Grid>
+                        </Border>
+
+                        <Button Margin="10"
+                                VerticalOptions="Center">
+                        </Button>
+
+                    </VerticalStackLayout>
+                </Grid>
+            </CollectionView.EmptyView>
+        </CollectionView>
+    </Grid>
+
+</ContentPage>
